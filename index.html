@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xinghui Li's Homepage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#224b8d',
+                        secondary: '#527bbd',
+                        accent: '#cd7b62',
+                        neutral: '#f6f6f6',
+                        dark: '#333333'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .card-hover {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+                border-color: theme('colors.primary');
+            }
+            .expand-transition {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow: hidden;
+            }
+            .section-fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInUp 0.8s ease forwards;
+            }
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .publication-card {
+                border: 1px solid transparent;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .publication-card:hover {
+                border-color: theme('colors.primary');
+                background-color: theme('colors.gray.50');
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gradient-to-br from-gray-50 to-gray-100 text-dark min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header Section -->
+        <header class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-8 mb-8 border border-gray-100 section-fade-in">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-6 md:mb-0">
+                    <img src="pic/self.png" alt="Xinghui Li" class="w-64 h-64 rounded-full object-cover mx-auto md:mx-0 border-4 border-primary/20 shadow-lg">
+                </div>
+                <div class="md:w-2/3 text-center md:text-left">
+                    <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-primary mb-2">Xinghui Li - <span class="text-secondary">李星辉</span></h1>
+                    <p class="text-lg text-gray-600 mb-4">Researcher at ByteDance (Intelligent Creation Lab) | M.S. of Tsinghua University</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-4">
+                        <!-- <a href="https://github.com/DingYikang/" class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300">
+                            <i class="fa fa-github mr-2"></i> GitHub
+                        </a>
+                        <a href="https://scholar.google.com/citations?user=gdP9StQAAAAJ&hl=zh-CN&oi=ao/" class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300">
+                            <i class="fa fa-google mr-2"></i> Google Scholar
+                        </a> -->
+                        <a href="mailto:li-xh21@tsinghua.org.cn" class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300">
+                            <i class="fa fa-envelope mr-2"></i> Email
+                        </a>
+                        <!-- <a href="https://weixin.qq.com/" class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300">
+                            <i class="fa fa-weixin mr-2"></i> WeChat: yeecon_
+                        </a> -->
+                    </div>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        <span class="px-4 py-2 bg-gradient-to-r from-primary/20 to-primary/10 text-primary rounded-full text-sm font-medium shadow-sm">Generative Models</span>
+                        <span class="px-4 py-2 bg-gradient-to-r from-primary/20 to-primary/10 text-primary rounded-full text-sm font-medium shadow-sm">3D Reconstruction</span>
+                        <span class="px-4 py-2 bg-gradient-to-r from-primary/20 to-primary/10 text-primary rounded-full text-sm font-medium shadow-sm">Computer Vision</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex flex-col gap-8">
+            <!-- Left Column - News & Quick Info -->
+            <div class="space-y-8">
+
+                <!-- Biography Section -->
+                <section class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Biography</h2>
+                    <p class="text-gray-600 mb-4">
+                        I am currently a researcher at ByteDance (Intelligent Creation Lab), where I am working on the task of Video/Image Generation and AIGC.
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        Before that, I obtained my M.S. at <a href="https://www.tsinghua.edu.cn/" class="text-primary hover:text-primary-dark transition-colors">Tsinghua University</a> in 2024 and B.Eng at <a href="https://www.nuaa.edu.cn/" class="text-primary hover:text-primary-dark transition-colors">NUAA</a> in 2021 (Rank 1/331).
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        If you are interested in working with me, please feel free to contact me at <a href="mailto:li-xh21@tsinghua.org.cn" class="text-primary hover:text-primary-dark transition-colors">li-xh21@tsinghua.org.cn</a>.
+                    </p>
+                </section>
+
+                <!-- News Section -->
+                <!-- <section class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-100 section-fade-in">
+                    <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Latest News</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Sep 2025</p>
+                                <p class="text-gray-600">We're delighted to release <a href="https://klingavatar.github.io/" class="text-primary hover:text-primary-dark transition-colors"><strong>Kling-Avatar</strong></a>. Try it on <a href="https://app.klingai.com/cn/ai-human/image/new" class="text-primary hover:text-primary-dark transition-colors"><strong>Kling AI Page</strong></a>!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">July 2025</p>
+                                <p class="text-gray-600">One paper (<a href="https://heiheishuang.xyz/mudg/" class="text-primary hover:text-primary-dark transition-colors">MuDG</a>) accepted to <strong>BMVC 2025</strong>. Congrats to <a href="https://heiheishuang.xyz/" class="text-primary hover:text-primary-dark transition-colors">Yingshuang</a>!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Jun 2025</p>
+                                <p class="text-gray-600">Two papers (<a href="https://royalmelon0505.github.io/DiST-4D/" class="text-primary hover:text-primary-dark transition-colors">DiST-4D</a>, <a href="https://lmd0311.github.io/HERMES/" class="text-primary hover:text-primary-dark transition-colors">HERMES</a>) accepted to <strong>ICCV 2025</strong>. Congrats to <a href="https://scholar.google.com/citations?user=pWLqZnoAAAAJ&hl=zh-CN&oi=ao" class="text-primary hover:text-primary-dark transition-colors">Jiazhe</a> and <a href="https://lmd0311.github.io/" class="text-primary hover:text-primary-dark transition-colors">Xin Zhou</a>!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Jun 2025</p>
+                                <p class="text-gray-600">One paper accepted to <strong>IROS 2025</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Feb 2025</p>
+                                <p class="text-gray-600">One paper (<a href="https://arlo0o.github.io/uniscene/" class="text-primary hover:text-primary-dark transition-colors">UniScene</a>) accepted to <strong>CVPR 2025</strong>. Congrats to my several interns! </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Jul 2024</p>
+                                <p class="text-gray-600">One paper (<a href="https://heiheishuang.xyz/M2Depth/" class="text-primary hover:text-primary-dark transition-colors">M2Depth</a>) accepted to <strong>ECCV 2024 as Oral</strong>. Congrats to <a href="https://heiheishuang.xyz/" class="text-primary hover:text-primary-dark transition-colors">Yingshuang</a>!</p>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Hidden news items -->
+                    <!-- <div id="moreNews" class="space-y-4 mt-4 expand-transition" style="max-height: 0; opacity: 0;">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Mar 2023</p>
+                                <p class="text-gray-600">Won Innovation Award of 3D Occupancy Prediction Challenge in CVPR 2023.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Mar 2023</p>
+                                <p class="text-gray-600">One paper accepted to CVPR 2023.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Sep 2022</p>
+                                <p class="text-gray-600">One paper accepted to NeurIPS 2022.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Jun 2022</p>
+                                <p class="text-gray-600">Two papers accepted to ECCV 2022.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-full p-2 mr-3">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Mar 2023</p>
+                                <p class="text-gray-600">One paper accepted to CVPR 2022.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="newsToggle" class="mt-4 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-300 flex items-center text-sm font-medium">
+                        More news <i class="fa fa-angle-down ml-2 transition-transform duration-300"></i>
+                    </button>
+                </section> -->
+                
+                <div class="space-y-8">
+                    <!-- Leading Online Projects -->
+                    <section class="bg-white/80 backdrop-blur-sm border border-gray-200/80 rounded-xl shadow-lg p-6 section-fade-in">
+                        <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Selected Online Projects</h2>
+                        
+                        <!-- 创建三列网格布局 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- GIF 1 -->
+                            <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <img src="pic/projects/orbit360.gif" alt="360度旋转" class="w-full h-64 object-cover">
+                                <div class="p-4 text-center">
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-secondary mb-2"><a href="https://www.douyin.com/video/7474228814520847674">Orbit360 💃</a></h3>
+                                        <p class="text-sm text-gray-600">Video Effects in Douyin & CapCut</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GIF 2 -->
+                            <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <img src="pic/projects/DreamID.gif" alt="DreamID" class="w-full h-64 object-cover">
+                                <div class="p-4 text-center">
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-secondary mb-2"><a href="https://jimeng.jianying.com/ai-tool/home">DreamID 👑</a></h3>
+                                        <p class="text-sm text-gray-600">AI Photo in Jimeng</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GIF 3 -->
+                            <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <img src="pic/projects/AI photo.gif" alt="AI Photo" class="w-full h-64 object-cover">
+                                <div class="p-4 text-center">
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-secondary mb-2"><a href="https://www.douyin.com/root/search/%E6%8A%96%E9%9F%B3ai%E5%BD%A2%E8%B1%A1%E5%85%A5%E5%8F%A3?aid=58122ba0-bf89-4862-bc41-790108208a32&modal_id=7488895935171415353&type=general">Personalized AI Image 👸</a></h3>
+                                        <p class="text-sm text-gray-600">AI Image in Douyin</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- GIF 3 -->
+                            <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <img src="pic/projects/shandian.gif" alt="shandian" class="w-full h-64 object-cover">
+                                <div class="p-4 text-center">
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-secondary mb-2">Flash ⚡️</h3>
+                                        <p class="text-sm text-gray-600">Video Effects in CapCut</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GIF 3 -->
+                            <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <img src="pic/projects/animal.gif" alt="animal" class="w-full h-64 object-cover">
+                                <div class="p-4 text-center">
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-secondary mb-2">Animal Transformation 🐻</h3>
+                                        <p class="text-sm text-gray-600">Video Effects in CapCut</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GIF 5 -->
+                            <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <img src="pic/projects/melt.gif" alt="melt" class="w-full h-64 object-cover">
+                                <div class="p-4 text-center">
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-secondary mb-2">Melt 🫠</h3>
+                                        <p class="text-sm text-gray-600">Video Effects in CapCut</p>
+                                    </div>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </section>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Industrial Experience -->
+                    <section class="bg-white/80 backdrop-blur-sm border border-gray-200/80 rounded-xl shadow-lg p-6 section-fade-in">
+                        <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Industrial Experience</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Industrial 1 -->
+                            <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                                <div class="md:w-1/4">
+                                    <img src="pic/Industrial/bytedance.png" alt="ByteDance" class="w-full h-40 object-cover rounded shadow">
+                                </div>
+                                <div class="md:w-3/4">
+                                    <h3 class="font-bold text-lg mb-1">Intelligent Creation Lab</h3>
+                                    <p class="text-sm font-medium mb-2">Sep. 2023 - Present, Intelligent Creation Lab, Beijing, China</p>
+                                    <p class="text-sm font-medium mb-2">Topic: Image/Video Generation</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Industrial 2 -->
+                            <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                                <div class="md:w-1/4">
+                                    <img src="pic/Industrial/tencent games.png" alt="Tencent" class="w-full h-40 object-cover rounded shadow">
+                                </div>
+                                <div class="md:w-3/4">
+                                    <h3 class="font-bold text-lg mb-1">IEG</h3>
+                                    <p class="text-sm font-medium mb-2">May. 2023 - Sep. 2023, IEG, Shenzhen, China</p>
+                                    <p class="text-sm font-medium mb-2">Topic: 3D Generation</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Industrial 3 -->
+                            <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                                <div class="md:w-1/4">
+                                    <img src="pic/Industrial/dji.png" alt="DJI" class="w-full h-40 object-cover rounded shadow">
+                                </div>
+                                <div class="md:w-3/4">
+                                    <h3 class="font-bold text-lg mb-1">Zhuoyu Technology</h3>
+                                    <p class="text-sm font-medium mb-2">Feb. 2023 - May. 2023, ZYT, Shenzhen, China</p>
+                                    <p class="text-sm font-medium mb-2">Topic: 3D Reconstruction</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Industrial 4 -->
+                            <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                                <div class="md:w-1/4">
+                                    <img src="pic/Industrial/huawei.png" alt="Huawei" class="w-full h-40 object-cover rounded shadow">
+                                </div>
+                                <div class="md:w-3/4">
+                                    <h3 class="font-bold text-lg mb-1">2012 Lab</h3>
+                                    <p class="text-sm font-medium mb-2">Jun. 2022 - Feb. 2023, 2012 Lab, Shenzhen, China</p>
+                                    <p class="text-sm font-medium mb-2">Topic: 3D Reconstruction</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Industrial 5 -->
+                            <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                                <div class="md:w-1/4">
+                                    <img src="pic/Industrial/casia.png" alt="Casia" class="w-full h-40 object-cover rounded shadow">
+                                </div>
+                                <div class="md:w-3/4">
+                                    <h3 class="font-bold text-lg mb-1">Institute of Automation</h3>
+                                    <p class="text-sm font-medium mb-2">Dec. 2021 - Jun. 2022, Beijing, China</p>
+                                    <p class="text-sm font-medium mb-2">Topic: 3D Reconstruction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Right Column - Publications & Projects -->
+            <div class="space-y-8">
+                <!-- Selected Publications -->
+                <section class="bg-white/80 backdrop-blur-sm border border-gray-200/80 rounded-xl shadow-lg p-6 section-fade-in">
+                    <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Selected Publications</h2>
+                    <p class="text-gray-600 mb-6 italic">(* denotes equal contribution, <sup>✝</sup> denotes corresponding author.)</p>
+                    
+                    <div class="space-y-6">
+                        <!-- Publication 1 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/OmniInsert.gif" alt="OmniInsert" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">OmniInsert: Mask-Free Video Insertion of Any Reference via Diffusion Transformer Models</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Jinshu Chen*, </span><span class="font-bold text-primary">Xinghui Li*<sup>✝</sup></span>, <span class="text-gray-600">Baixu*, Tianxiang Ma, Pengze Zhang, Zhuowei Chen, Gen Li, Lijie Liu, Songtao Zhao<sup>✝</sup></span>, Bingchuan Li, Qian HE</span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">Under Review</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/abs/2509.17627" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://phantom-video.github.io/OmniInsert/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/Phantom-video/OmniInsert" class="text-xs px-3 py-1 bg-red-100 text-red-600 text-xs rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 2 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/Phantom-Data.png" alt="Phantom-Data" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">Phantom-Data: Towards a General Subject-Consistent Video Generation Dataset</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Zhuowei Chen*, Bingchuan Li*<sup>✝</sup>, Tianxiang Ma*, Lijie Liu*, Mingcong Liu, Yi Zhang, Gen Li, </span><span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Siyu Zhou, Qian He, Xinglong Wu</span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">Under Review</p>
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2506.18851" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://phantom-video.github.io/Phantom-Data/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/Phantom-video/Phantom-Data" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 3 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/AnyDressing.png" alt="Anydressing" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">AnyDressing: Customizable Multi-Garment Virtual Dressing via Latent Diffusion Models</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Qichao Sun, Pengze Zhang, Fulong Ye, Zhichao Liao, Wanquan Feng<sup>✝</sup>, Songtao Zhao<sup>✝</sup>, Qian He</span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">CVPR 2025</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2412.04146" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://crayon-shinchan.github.io/AnyDressing/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/Crayon-Shinchan/AnyDressing" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-color">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 4 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/GaussianRoom.png" alt="GaussianRoom" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">GaussianRoom: Improving 3D Gaussian Splatting with SDF Guidance and Monocular Cues for Indoor Scene Reconstruction</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Haodong Xiang*, </span><span class="font-bold text-primary">Xinghui Li</span>*, <span class="text-gray-600">Kai Cheng*, Xiansong Lai, Wanting Zhang, Zhichao Liao, Long Zeng<sup>✝</sup>, Xueping Liu<sup>✝</sup></span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">ICRA 2025</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2405.19671" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://xhd0612.github.io/GaussianRoom.github.io/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/xhd0612/GaussianRoom" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 5 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/2DGS-Room.png" alt="2DGS-Room" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">2DGS-Room: Seed-Guided 2D Gaussian Splatting with Geometric Constrains for High-Fidelity Indoor Scene Reconstruction</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Wanting Zhang, Haodong Xiang, Zhichao Liao, Xiansong Lai, </span><span class="font-bold text-primary">Xinghui Li</span><sup>✝</sup>, <span class="text-gray-600">Long Zeng</span><sup>✝</sup>
+                                </p>
+                                <p class="text-sm font-medium mb-2">Under Review</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2412.03428" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://valentina-zhang.github.io/2DGS-Room/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/Valentina-Zhang/2DGS-Room" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 6 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/DreamID.png" alt="DreamID" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">DreamID: High-Fidelity and Fast diffusion-based Face Swapping via Triplet ID Group Learning</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Fulong Ye*, Miao Hua*, Pengze Zhang, </span><span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Qichao Sun, Songtao Zhao<sup>✝</sup>, Qian He<sup>✝</sup>, Xinglong Wu</span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">SIGGRAPH ASIA 2025</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2504.14509" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://superhero-7.github.io/DreamID/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://jimeng.jianying.com/ai-tool/home" class="text-xs px-3 py-1 bg-red-100 text-red-600 text-xs rounded-full hover:bg-primary/20 transition-colors">App</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hidden publications -->
+                    <div id="morePublications" class="space-y-6 mt-6 expand-transition" style="max-height: 0; opacity: 0;">
+                        <!-- Publication 7 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/DreamO.png" alt="DreamO" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">DreamO: A Unified Framework for Image Customization</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Chong Mou, Yanze Wu<sup>✝</sup>, Wenxu Wu, Zinan Guo, Pengze Zhang, Yufeng Cheng, Yiming Luo, Fei Ding, Shiwen Zhang, </span><span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Mengtian Li, Mingcong Liu, Yi Zhang, Shaojin Wu, Songtao Zhao, Jian Zhang, Qian He, Xinglong Wu</span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">SIGGRAPH ASIA 2025</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2504.16915" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://mc-e.github.io/project/DreamO/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/bytedance/DreamO" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 8 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2025/training-free.png" alt="training-free" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">Training-Free Point Cloud Recognition Based on Geometric and Semantic Information Fusion</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Yan Chen, Di Huang, Zhichao Liao, Xi Cheng, </span><span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Long Zeng<sup>✝</sup></span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">ICASSP 2025</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2504.16915" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://mc-e.github.io/project/DreamO/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                    <a href="https://github.com/bytedance/DreamO" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 9 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2024/MSFormer.png" alt="MSFormer" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">Freehand sketch generation from mechanical components</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Zhichao Liao*, Fengyuan Piao<sup>✝</sup>, Di Huang*, </span><span class="font-bold text-primary">Xinghui Li<sup>✝</sup></span>, <span class="text-gray-600">Yue Ma, Pingfa Feng, Heming Fang*, Long Zeng<sup>✝</sup></span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">ACM-MM 2024</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://dl.acm.org/doi/pdf/10.1145/3664647.3681046" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://mcfreeskegen.github.io/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                    <a href="https://github.com/di-huang/Freehand-Sketch-Generation-from-Mechanical-Components/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publication 10 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2024/GenesisTex.png" alt="GenesisTex" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">GenesisTex: Adapting Image Denoising Diffusion to Texture Space</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="text-gray-600">Chenjian Gao*, Boyan Jiang, </span><span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Yingpeng Zhang*, Qian Yu<sup>✝</sup></span>
+                                </p>
+                                <!-- <p class="text-sm text-gray-500">IEEE/CVF Conference on Computer Vision and Pattern Recognition</p> -->
+                                <p class="text-sm font-medium mb-2">CVPR 2024</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Gao_GenesisTex_Adapting_Image_Denoising_Diffusion_to_Texture_Space_CVPR_2024_paper.pdf" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                    <a href="https://cjeen.github.io/GenesisTexPaper/" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Project</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 11 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2024/FD-NeuS.png" alt="FD-NeuS" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">Fine-detailed Neural Indoor Scene Reconstruction using Multi-level Importance Sampling and Multi-view Consistency</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="font-bold text-primary">Xinghui Li</span>, <span class="text-gray-600">Yuchen Ji, Xiansong Lai, Wanting Zhang, Long Zeng</span><sup>✝</sup>
+                                </p>
+                                <p class="text-sm font-medium mb-2">ICIP 2024</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://arxiv.org/pdf/2410.07597" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 12 -->
+                        <div class="flex flex-col md:flex-row gap-4 p-4 rounded-lg publication-card">
+                            <div class="md:w-1/4">
+                                <img src="pic/2024/Ea-NeuS.png" alt="Ea-NeuS" class="w-full h-40 object-cover rounded shadow">
+                            </div>
+                            <div class="md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">Edge-aware neural implicit surface reconstruction</h3>
+                                <p class="text-gray-600 text-sm mb-2">
+                                    <span class="font-bold text-primary">Xinghui Li*, </span><span class="text-gray-600">Yikang Ding*, Jia Guo<sup>✝</sup>, Xiansong Lai, Shihao Ren, Wensen Feng, Long Zeng<sup>✝</sup></span>
+                                </p>
+                                <p class="text-sm font-medium mb-2">ICME 2023</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="https://dl.acm.org/doi/pdf/10.1145/3610543.3626172" class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">Paper</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="publicationsToggle" class="mt-6 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-300 flex items-center text-sm font-medium">
+                        View all publications <i class="fa fa-angle-down ml-2 transition-transform duration-300"></i>
+                    </button>
+                </section>
+
+                <!-- Honors & Awards -->
+                <section class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-100 section-fade-in">
+                    <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Honors & Awards</h2>
+                    <ul class="space-y-1">
+                        <li class="flex items-start p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <div class="flex-shrink-0 bg-accent/10 text-accent rounded-full p-2 mr-3">
+                                <i class="fa fa-trophy"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Outstanding Graduates of NUAA (Top 1%)</p>
+                                <p class="text-gray-600 text-sm">2021.06</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <div class="flex-shrink-0 bg-accent/10 text-accent rounded-full p-2 mr-3">
+                                <i class="fa fa-trophy"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">National Encouragement Scholarship (Top 3%)</p>
+                                <p class="text-gray-600 text-sm">2020.12</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <div class="flex-shrink-0 bg-accent/10 text-accent rounded-full p-2 mr-3">
+                                <i class="fa fa-trophy"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Merit Student of Jiangsu Province (Top 0.2%)</p>
+                                <p class="text-gray-600 text-sm">2020.06</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <div class="flex-shrink-0 bg-accent/10 text-accent rounded-full p-2 mr-3">
+                                <i class="fa fa-trophy"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Top 100 Youth of NUAA (Top 0.1%)</p>
+                                <p class="text-gray-600 text-sm">2020.05</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start p-2 rounded-lg transition-colors hover:bg-gray-50">
+                            <div class="flex-shrink-0 bg-accent/10 text-accent rounded-full p-2 mr-3">
+                                <i class="fa fa-trophy"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">National Scholarship (Top 1%)</p>
+                                <p class="text-gray-600 text-sm">2019.12</p>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Academic Services -->
+                <!-- <section class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-100 section-fade-in">
+                    <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Academic Services</h2>
+                    <p class="font-semibold mb-2">Conference Reviewer:</p>
+                    <div class="flex flex-wrap gap-2 text-sm">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">CVPR 2022-</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">ECCV 2022-</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">AAAI 2023-</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">ACCV 2022-</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">3DV 2022-</span>
+                    </div>
+                </section> -->
+            </div>
+
+                <!-- Research Interests -->
+                <section class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-100 section-fade-in">
+                    <h2 class="text-xl font-bold text-secondary mb-4 border-b pb-2">Research Interests</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-gray-50 p-6 rounded-lg text-center transition-all duration-300 hover:bg-primary/5 hover:shadow-lg">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                                <i class="fa fa-paint-brush text-2xl"></i>
+                            </div>
+                            <h3 class="font-semibold mb-1 text-lg">Generative Models</h3>
+                            <p class="text-sm text-gray-600">Diffusion models, video editing, image generation</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg text-center transition-all duration-300 hover:bg-primary/5 hover:shadow-lg">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                                <i class="fa fa-cube text-2xl"></i>
+                            </div>
+                            <h3 class="font-semibold mb-1 text-lg">3D Reconstruction</h3>
+                            <p class="text-sm text-gray-600">NeRF, 3DGS, 2DGS</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg text-center transition-all duration-300 hover:bg-primary/5 hover:shadow-lg">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                                <i class="fa fa-eye text-2xl"></i>
+                            </div>
+                            <h3 class="font-semibold mb-1 text-lg">3D Generation</h3>
+                            <p class="text-sm text-gray-600">Texture generation</p>
+                        </div>
+                    </div>
+                </section>
+
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-500 text-sm border-t pt-8">
+            <p>© 2025 Xinghui Li. All rights reserved.</p>
+            <p class="mt-2">Last updated: Sep 2025</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const newsToggle = document.getElementById('newsToggle');
+            const moreNews = document.getElementById('moreNews');
+            const newsToggleIcon = newsToggle.querySelector('i');
+
+            newsToggle.addEventListener('click', function () {
+                const isExpanded = moreNews.style.maxHeight && moreNews.style.maxHeight !== '0px';
+                if (isExpanded) {
+                    moreNews.style.maxHeight = '0px';
+                    moreNews.style.opacity = '0';
+                    newsToggleIcon.classList.remove('rotate-180');
+                    newsToggle.childNodes[0].nodeValue = "More news ";
+                } else {
+                    moreNews.style.maxHeight = moreNews.scrollHeight + 'px';
+                    moreNews.style.opacity = '1';
+                    newsToggleIcon.classList.add('rotate-180');
+                    newsToggle.childNodes[0].nodeValue = "Less news ";
+                }
+            });
+
+            const publicationsToggle = document.getElementById('publicationsToggle');
+            const morePublications = document.getElementById('morePublications');
+            const pubToggleIcon = publicationsToggle.querySelector('i');
+
+            publicationsToggle.addEventListener('click', function () {
+                const isExpanded = morePublications.style.maxHeight && morePublications.style.maxHeight !== '0px';
+                if (isExpanded) {
+                    morePublications.style.maxHeight = '0px';
+                    morePublications.style.opacity = '0';
+                    pubToggleIcon.classList.remove('rotate-180');
+                    publicationsToggle.childNodes[0].nodeValue = "View all publications ";
+                } else {
+                    morePublications.style.maxHeight = morePublications.scrollHeight + 'px';
+                    morePublications.style.opacity = '1';
+                    pubToggleIcon.classList.add('rotate-180');
+                    publicationsToggle.childNodes[0].nodeValue = "Hide publications ";
+                }
+            });
+        });
+    </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 处理新闻切换按钮
+            try {
+                const newsToggle = document.getElementById('newsToggle');
+                if (newsToggle) {
+                    const moreNews = document.getElementById('moreNews');
+                    const newsToggleIcon = newsToggle.querySelector('i');
+    
+                    newsToggle.addEventListener('click', function () {
+                        const isExpanded = moreNews.style.maxHeight && moreNews.style.maxHeight !== '0px';
+                        if (isExpanded) {
+                            moreNews.style.maxHeight = '0px';
+                            moreNews.style.opacity = '0';
+                            newsToggleIcon.classList.remove('rotate-180');
+                            newsToggle.childNodes[0].nodeValue = "More news ";
+                        } else {
+                            moreNews.style.maxHeight = moreNews.scrollHeight + 'px';
+                            moreNews.style.opacity = '1';
+                            newsToggleIcon.classList.add('rotate-180');
+                            newsToggle.childNodes[0].nodeValue = "Less news ";
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('News toggle error:', error);
+            }
+    
+            // 处理出版物切换按钮
+            try {
+                const publicationsToggle = document.getElementById('publicationsToggle');
+                if (publicationsToggle) {
+                    const morePublications = document.getElementById('morePublications');
+                    const pubToggleIcon = publicationsToggle.querySelector('i');
+    
+                    publicationsToggle.addEventListener('click', function () {
+                        const isExpanded = morePublications.style.maxHeight && morePublications.style.maxHeight !== '0px';
+                        if (isExpanded) {
+                            morePublications.style.maxHeight = '0px';
+                            morePublications.style.opacity = '0';
+                            pubToggleIcon.classList.remove('rotate-180');
+                            publicationsToggle.childNodes[0].nodeValue = "View all publications ";
+                        } else {
+                            morePublications.style.maxHeight = morePublications.scrollHeight + 'px';
+                            morePublications.style.opacity = '1';
+                            pubToggleIcon.classList.add('rotate-180');
+                            publicationsToggle.childNodes[0].nodeValue = "Hide publications ";
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Publications toggle error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
