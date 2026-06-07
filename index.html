@@ -954,6 +954,48 @@
                 console.error('Publication card hover effect error:', error);
             }
 
+            // 出版物 GIF：默认显示静止首帧，悬浮卡片时再播放，降低持续解码开销
+            try {
+                document.querySelectorAll('.publication-card img[src$=".gif"]').forEach(function (img) {
+                    const gifSrc = img.getAttribute('src');
+                    const card = img.closest('.publication-card');
+                    let frozenSrc = null;
+                    let playing = true;
+
+                    const loader = new Image();
+                    loader.onload = function () {
+                        try {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = loader.naturalWidth;
+                            canvas.height = loader.naturalHeight;
+                            canvas.getContext('2d').drawImage(loader, 0, 0);
+                            frozenSrc = canvas.toDataURL('image/png');
+                            img.src = frozenSrc;
+                            playing = false;
+                        } catch (err) {
+                            // 跨域或受污染画布时保持原 GIF 播放
+                            frozenSrc = null;
+                        }
+                    };
+                    loader.src = gifSrc;
+
+                    card.addEventListener('mouseenter', function () {
+                        if (!playing) {
+                            img.src = gifSrc;
+                            playing = true;
+                        }
+                    });
+                    card.addEventListener('mouseleave', function () {
+                        if (frozenSrc) {
+                            img.src = frozenSrc;
+                            playing = false;
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Publication GIF hover-play error:', error);
+            }
+
             // 处理新闻切换按钮
             try {
                 const newsToggle = document.getElementById('newsToggle');
