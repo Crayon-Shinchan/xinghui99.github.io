@@ -293,7 +293,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- GIF 1 -->
                             <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <img src="pic/projects/orbit360_poster.jpg" data-gif="pic/projects/orbit360.gif" alt="360度旋转" loading="lazy" decoding="async" class="w-full h-64 object-cover">
+                                <img src="pic/projects/orbit360.gif" alt="360度旋转" class="w-full h-64 object-cover">
                                 <div class="p-4 text-center">
                                     <div class="p-4">
                                         <h3 class="font-bold text-secondary mb-2"><a href="https://www.douyin.com/video/7474228814520847674">Orbit360 💃</a></h3>
@@ -304,7 +304,7 @@
                             
                             <!-- GIF 2 -->
                             <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <img src="pic/projects/DreamID_poster.jpg" data-gif="pic/projects/DreamID.gif" alt="DreamID" loading="lazy" decoding="async" class="w-full h-64 object-cover">
+                                <img src="pic/projects/DreamID.gif" alt="DreamID" class="w-full h-64 object-cover">
                                 <div class="p-4 text-center">
                                     <div class="p-4">
                                         <h3 class="font-bold text-secondary mb-2"><a href="https://jimeng.jianying.com/ai-tool/home">DreamID 👑</a></h3>
@@ -315,7 +315,7 @@
                             
                             <!-- GIF 3 -->
                             <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <img src="pic/projects/AI photo_poster.jpg" data-gif="pic/projects/AI photo.gif" alt="AI Photo" loading="lazy" decoding="async" class="w-full h-64 object-cover">
+                                <img src="pic/projects/AI photo.gif" alt="AI Photo" class="w-full h-64 object-cover">
                                 <div class="p-4 text-center">
                                     <div class="p-4">
                                         <h3 class="font-bold text-secondary mb-2"><a href="https://www.douyin.com/root/search/%E6%8A%96%E9%9F%B3ai%E5%BD%A2%E8%B1%A1%E5%85%A5%E5%8F%A3?aid=58122ba0-bf89-4862-bc41-790108208a32&modal_id=7488895935171415353&type=general">Personalized AI Image 👸</a></h3>
@@ -326,7 +326,7 @@
 
                             <!-- GIF 3 -->
                             <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <img src="pic/projects/shandian_poster.jpg" data-gif="pic/projects/shandian.gif" alt="shandian" loading="lazy" decoding="async" class="w-full h-64 object-cover">
+                                <img src="pic/projects/shandian.gif" alt="shandian" class="w-full h-64 object-cover">
                                 <div class="p-4 text-center">
                                     <div class="p-4">
                                         <h3 class="font-bold text-secondary mb-2">Flash ⚡️</h3>
@@ -337,7 +337,7 @@
                             
                             <!-- GIF 3 -->
                             <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <img src="pic/projects/animal_poster.jpg" data-gif="pic/projects/animal.gif" alt="animal" loading="lazy" decoding="async" class="w-full h-64 object-cover">
+                                <img src="pic/projects/animal.gif" alt="animal" class="w-full h-64 object-cover">
                                 <div class="p-4 text-center">
                                     <div class="p-4">
                                         <h3 class="font-bold text-secondary mb-2">Animal Transformation 🐻</h3>
@@ -348,7 +348,7 @@
                             
                             <!-- GIF 5 -->
                             <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <img src="pic/projects/melt_poster.jpg" data-gif="pic/projects/melt.gif" alt="melt" loading="lazy" decoding="async" class="w-full h-64 object-cover">
+                                <img src="pic/projects/melt.gif" alt="melt" class="w-full h-64 object-cover">
                                 <div class="p-4 text-center">
                                     <div class="p-4">
                                         <h3 class="font-bold text-secondary mb-2">Melt 🫠</h3>
@@ -954,36 +954,58 @@
                 console.error('Publication card hover effect error:', error);
             }
 
-            // GIF 悬浮播放：默认仅加载轻量首帧图，悬浮时才下载并播放完整 GIF
+            // 论文 GIF：进入视口时懒加载预取，默认显示静止首帧，悬浮即时播放
             try {
-                document.querySelectorAll('img[data-gif]').forEach(function (img) {
-                    const gifSrc = img.getAttribute('data-gif');
-                    const posterSrc = img.getAttribute('src');
-                    // 悬浮触发区域：出版物用整张卡片，其余用图片最近的容器
-                    const hoverTarget = img.closest('.publication-card') || img.parentElement || img;
-                    let playing = false;
-                    let gifReady = false;
+                const lazyGifs = document.querySelectorAll('img[data-gif]');
 
-                    // 首次悬浮时才预取 GIF，避免初始加载所有动图
+                const prefetchGif = function (img) {
+                    if (img.dataset.gifReady || img.dataset.gifLoading) {
+                        return;
+                    }
+                    img.dataset.gifLoading = '1';
                     const preload = new Image();
                     preload.onload = function () {
-                        gifReady = true;
-                        if (playing) {
-                            img.src = gifSrc;
+                        img.dataset.gifReady = '1';
+                        delete img.dataset.gifLoading;
+                        // 若此刻正悬浮，立即切换播放
+                        if (img.dataset.playing) {
+                            img.src = img.getAttribute('data-gif');
                         }
                     };
+                    preload.src = img.getAttribute('data-gif');
+                };
+
+                // 进入视口附近即预取 GIF（懒加载，而非等到悬浮）
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                prefetchGif(entry.target);
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { rootMargin: '200px' });
+                    lazyGifs.forEach(function (img) {
+                        observer.observe(img);
+                    });
+                } else {
+                    lazyGifs.forEach(prefetchGif);
+                }
+
+                lazyGifs.forEach(function (img) {
+                    const gifSrc = img.getAttribute('data-gif');
+                    const posterSrc = img.getAttribute('src');
+                    const hoverTarget = img.closest('.publication-card') || img.parentElement || img;
 
                     hoverTarget.addEventListener('mouseenter', function () {
-                        playing = true;
-                        if (!preload.src) {
-                            preload.src = gifSrc;
-                        }
-                        if (gifReady) {
+                        img.dataset.playing = '1';
+                        prefetchGif(img);
+                        if (img.dataset.gifReady) {
                             img.src = gifSrc;
                         }
                     });
                     hoverTarget.addEventListener('mouseleave', function () {
-                        playing = false;
+                        delete img.dataset.playing;
                         img.src = posterSrc;
                     });
                 });
